@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <cstring>
+#include <stdlib.h>
+
+using namespace std;
+
+struct Ponto{
+	float x;
+	float y;
+	float z;
+};
+
+void carregaOBJ(const char *path, vector<Ponto> &vertices){
+	char lido[100];
+	Ponto temp_ponto, face;
+	vector<Ponto> tempVertice;
+	printf("Carregando Arquivo OBJ %s...\n", path);
+	FILE * file = fopen(path, "r");
+	if(file == NULL){
+		printf("Não foi possivel abrir o arquivo obj!\n");
+		return;
+	}
+	while(fscanf(file, "%s", lido) != EOF){
+		if(strcmp(lido, "v") == 0){
+            fscanf(file, "%f %f %f\n", &temp_ponto.x, &temp_ponto.y, &temp_ponto.z);
+			tempVertice.push_back(temp_ponto);
+        }
+        if(strcmp(lido, "f") == 0){
+            int p1, p2, p3;
+            fscanf(file, "%d", &p1);
+            fscanf(file, "%s", lido);
+            fscanf(file, "%d", &p2);
+            fscanf(file, "%s", lido);
+            fscanf(file, "%d", &p3);
+            fscanf(file, "%s", lido);
+            vertices.push_back(tempVertice[p1-1]);
+            vertices.push_back(tempVertice[p2-1]);
+            vertices.push_back(tempVertice[p3-1]);
+        }
+	}
+    for (vector<Ponto>::size_type i = 0; i < vertices.size(); i++) {
+        printf("%d - %f %f %f\n", i+1, vertices[i].x, vertices[i].y, vertices[i].z);
+    }
+	fclose(file);
+}
